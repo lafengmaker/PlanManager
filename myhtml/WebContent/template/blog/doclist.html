@@ -26,16 +26,24 @@
   </head>
   <body>
    {% include "top.html" %}
-   <div class="container marketing">
-   <div class="jumbotron">
-     <div>
-     <h4>{{doc.title}}</h4>
-     </div>
-     <div>
-     <p>{{doc.text}}</p>
-     </div>
-     </div>
-	</div>
+   <div class="container marketing" style="margin-top: 40px">
+      <!-- START THE FEATURETTES -->
+
+      <hr class="featurette-divider">
+	{% for doc in doclist %}
+      <div class="row featurette">
+        <div class="col-md-7">
+          <a href="{% url 'showdoc' doc.id %}"><h5 class="featurette-heading">{{doc.title}} <span class="text-muted">{{doc.tag}}</span></h5></a>
+          <p class="lead">{{doc.text|truncatewords:"20"}} </p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive" data-src="holder.js/25x25/auto" alt="Generic placeholder image">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+      {% endfor %}
+</div>
       <hr class="featurette-divider">
    {% include "footer.html" %}
    <script src="/js/jquery-1.10.2.min.js"></script>

@@ -17,6 +17,10 @@ urlpatterns = patterns('',
                          {'document_root':STATICFILES_DIRS[0]+'/showimg'}),
      url(r'^blog/images/$', 'Blog.views.images', name='images'),
       url(r'^blog/turn90/$', 'Blog.views.turn90', name='turn90'),
+      url(r'^blog/doclist/$', 'Blog.views.doclist', name='doclist'),
+      url(r'^blog/showdoc/(?P<p>.*)', 'Blog.views.showdoc', name='showdoc'),
+      url(r'^logout/$', 'PlanManager.views.mylogout', name='mylogout'),
+      url(r'^accounts/login/$', 'django.contrib.auth.views.login',{"template_name":"signin.html"}, name='signin'),
     # url(r'^PlanManager/', include('PlanManager.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

@@ -1,14 +1,16 @@
-from django.shortcuts import render_to_response ,redirect
+from django.shortcuts import  redirect
 from PlanManager.settings import STATICFILES_DIRS
 import os
 import Image
-from  models import imgpic
+from  models import imgpic,article
+from django.contrib.auth.decorators import login_required
 import logging
+from PlanManager.webUtil import my_render_to_response,getPfromRequest
+#from django.core.urlresolvers import reverse
 logger = logging.getLogger(__name__)
-def getPfromRequest(request,key="p"):
-    if key in request.GET:
-        return request.GET[key]
-def images(resquest):
+    
+@login_required()
+def images(request):
     imagedir=STATICFILES_DIRS[0]+"/showimg/"
     files = os.listdir(imagedir)
     deaultx=850.0
@@ -21,7 +23,6 @@ def images(resquest):
             pic=imgpic()
             pic.url=f;      
             x,y=tup
-            logger.info("x====================%i y=======================%i"%(x,y))
             if x<deaultx and y<deaulty :
                 pic.x=x
                 pic.y=y
@@ -33,9 +34,9 @@ def images(resquest):
                     pic.x=(x/(y/deaulty))
                     pic.y=deaulty            
             images.append(pic);
-    return render_to_response("blog/image.html",{"fl":images});
+    return my_render_to_response(request,"blog/image.html",{"fl":images});
 
-
+@login_required(redirect_field_name='prepage')
 def turn90(request):
     imagedir=STATICFILES_DIRS[0]+"/showimg/"
     src=getPfromRequest(request)
@@ -48,4 +49,15 @@ def turn90(request):
         
         xxx.save(imagedir+fname)
     return redirect("images")
+
+@login_required()
+def doclist(request):
+    articlelist=article.objects.all();
+    return my_render_to_response(request,"blog/doclist.html",{"doclist":articlelist});
+
+@login_required()
+def showdoc(request,p):    
+    doc=article.objects.get(id=p);
+    return my_render_to_response(request,"blog/doc.html",{"doc":doc});
+    
         

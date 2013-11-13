@@ -11,14 +11,14 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#">计划列表</a></li>
+          <li><a href="{% url 'home' %}">首页</a></li>
+           <li><a href="#">计划列表</a></li>
             <li><a href="#about"></a></li>
-            <li><a href="#about"></a></li>
-            <li><a href="blog/images">图片</a></li>
+            <li><a href="/blog/images">图片</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">文章 <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
+                <li><a href="/blog/doclist">所有文章</a></li>
                 <li><a href="#">Another action</a></li>
                 <li><a href="#">Something else here</a></li>
                 <li class="divider"></li>
@@ -29,9 +29,12 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-           
-            <li><a href="#signindiv" data-toggle="modal" >登陆</a></li>
-            <li class="active"><a href="./">注册</a></li>
+          {% if user.is_authenticated %}
+          	<li><a>欢迎, {{ user.username }}</a></li>          
+    		<li> <a style="float:left; " href="{% url 'mylogout' %}" >退出</a></li>
+		  {% else %}  
+    		<li><a href="{% url 'signin' %}" >登陆</a></li>
+		  {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>

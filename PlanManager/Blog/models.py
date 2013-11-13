@@ -8,7 +8,7 @@ class article(models.Model):
     text=models.TextField("内容",max_length=4000)
     cdate=models.DateTimeField()
     tag=models.CharField("标签",max_length=200,blank=True)
-    def __str__(self):
+    def __unicode__(self):
         return self.title
     
 class imgpic(models.Model):
@@ -19,3 +19,5 @@ class imgpic(models.Model):
     x=models.IntegerField(blank=True,null=True)
     y=models.IntegerField(blank=True,null=True)
     tag=models.CharField("标签",max_length=200,blank=True)
+    def __unicode__(self):
+        return self
